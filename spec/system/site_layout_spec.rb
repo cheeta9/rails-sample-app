@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe 'Site layout', type: :system do
-  describe 'layout links' do
+RSpec.describe 'SiteLayout', type: :system do
+  describe 'home' do
     it 'root_pathへのリンクが2つ、help, about, contactへのリンクが表示されていること' do
       visit root_path
 
