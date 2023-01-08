@@ -1,12 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  let!(:user) do
-    User.new(
-      name: 'Example user', email: 'user@examle.com',
-      password: 'foobar', password_confirmation: 'foobar'
-    )
-  end
+  let!(:user) { FactoryBot.build(:user) }
 
   it 'userが有効であること' do
     expect(user).to be_valid
