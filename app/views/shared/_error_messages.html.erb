@@ -1,0 +1,13 @@
+<% if model.errors.any? %>
+  <div class="mb-3 p-6 bg-red-100 text-red-500 rounded-lg">
+    <div class="mb-3 text-xl font-bold">
+      The form contains <%= pluralize(model.errors.count, "error") %>.
+    </div>
+
+    <ul class="pl-5 list-disc">
+      <% model.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
