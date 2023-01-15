@@ -8,4 +8,35 @@ RSpec.describe 'Users', type: :request do
       expect(response.body).to include full_title('Sign up')
     end
   end
+
+  describe 'POST /signup' do
+    it '無効な値の場合は登録できないこと' do
+      expect do
+        post users_path, params: { user: { name: '',
+                                           email: 'user@invalid',
+                                           password: 'foo',
+                                           password_confirmation: 'foobar' } }
+      end.to_not change(User, :count)
+    end
+
+    context '有効な値の場合' do
+      let!(:user_params) do
+        { user: { name: 'Example User',
+                  email: 'user@example.com',
+                  password: 'password',
+                  password_confirmation: 'password' } }
+      end
+
+      it '登録できること' do
+        expect { post users_path, params: user_params }.to change(User, :count).by 1
+      end
+
+      it 'users/show にリダイレクトされること' do
+        post users_path, params: user_params
+        user = User.last
+        expect(response).to redirect_to user
+        expect(flash[:success]).not_to be_empty
+      end
+    end
+  end
 end

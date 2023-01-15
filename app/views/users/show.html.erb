@@ -1,0 +1,15 @@
+<%= provide(:title, @user.name) %>
+<div class="p-6 bg-gray-100 text-gray-700">
+  <aside>
+    <section>
+      <h1 class="flex">
+        <div>
+          <%= gravatar_for @user %>
+        </div>
+        <div class="pl-3 text-xl font-bold">
+          <%= @user.name %>
+        </div>
+      </h1>
+    </section>
+  </aside>
+</div>
