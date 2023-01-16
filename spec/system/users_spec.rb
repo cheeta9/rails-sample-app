@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'Users', type: :system do
   describe '#create' do
-    it 'エラーメッセージ用の表示領域が描画されていること' do
+    it 'エラーメッセージが表示されていること' do
       visit signup_path
 
       fill_in 'Name', with: ''

@@ -16,7 +16,7 @@ RSpec.describe 'Users', type: :request do
                                            email: 'user@invalid',
                                            password: 'foo',
                                            password_confirmation: 'foobar' } }
-      end.to_not change(User, :count)
+      end.not_to change(User, :count)
     end
 
     context '有効な値の場合' do
@@ -29,13 +29,10 @@ RSpec.describe 'Users', type: :request do
 
       it '登録できること' do
         expect { post users_path, params: user_params }.to change(User, :count).by 1
-      end
-
-      it 'users/show にリダイレクトされること' do
-        post users_path, params: user_params
         user = User.last
         expect(response).to redirect_to user
         expect(flash[:success]).not_to be_empty
+        expect(logged_in?).to be_truthy
       end
     end
   end
