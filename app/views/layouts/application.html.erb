@@ -14,7 +14,7 @@
     <%= render "layouts/header" %>
     <div class="container">
       <% flash.each do |message_type, message| %>
-        <div class="p-6 bg-green-100 text-gray-700">
+        <div class="p-6 text-gray-700 <%= message_type == 'danger' ? 'bg-red-100' : 'bg-green-100'%>">
           <%= message %>
         </div>
       <% end %>
