@@ -69,4 +69,10 @@ RSpec.describe User, type: :model do
     user.password = user.password_confirmation = 'a' * 5
     expect(user).not_to be_valid
   end
+
+  describe '#authenticated?' do
+    it 'digestがnilならfalseを返すこと' do
+      expect(user.authenticated?('')).to be_falsey
+    end
+  end
 end
