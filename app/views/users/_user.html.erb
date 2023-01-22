@@ -1,0 +1,11 @@
+<li class="flex pb-3">
+  <%= gravatar_for user, size: 50 %>
+  <div class="pl-3">
+    <%= link_to user.name, user, class: "underline decoration-sky-500" %>
+  </div>
+  <% if current_user.admin? && !current_user?(user) %>
+    <div class="pl-3">
+      <%= link_to "delete", user, data: { turbo_method: :delete, confirm: "You sure?" }, class: "underline decoration-sky-500" %>
+    </div>
+  <% end %>
+</li>

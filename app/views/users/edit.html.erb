@@ -1,0 +1,16 @@
+<% provide(:title, 'Edit user') %>
+<% provide(:button_text, 'Save changes') %>
+<div class="p-6 bg-gray-100 text-gray-700">
+  <h1 class="pb-6 text-xl font-bold">Update your profile</h1>
+
+  <div class="grid grid-cols-1 grid-rows-1 gap-4 text-sm font-bold leading-6 bg-stripes-fuchsia rounded-lg">
+    <%= render 'form' %>
+
+    <div>
+      <%= gravatar_for @user %>
+      <a href="https://gravatar.com/emails" target="_blank" rel="noopener" class="underline decoration-sky-500">
+        <span class="text-sky-500">change</span>
+      </a>
+    </div>
+  </div>
+</div>
