@@ -10,7 +10,7 @@ class User < ApplicationRecord
                     length: { maximum: 255 },
                     format: { with: /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i },
                     uniqueness: { case_sensitive: false }
-  validates :password, presence: true, length: { minimum: 6 }
+  validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
 
   # 渡された文字列のハッシュ値を返す
   def self.digest(string)

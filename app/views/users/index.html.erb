@@ -1,0 +1,18 @@
+<%= provide(:title, 'All users') %>
+<div class="p-6 bg-gray-100 text-gray-700">
+  <h1 class="pb-6 text-xl font-bold">All users</h1>
+
+  <div class="mx-auto text-center my-4">
+    <%= will_paginate %>
+  </div>
+
+  <div class="grid grid-cols-1 grid-rows-1 gap-4 text-sm font-bold leading-6 bg-stripes-fuchsia rounded-lg">
+    <ul>
+      <%= render @users %>
+    </ul>
+
+    <div class="mx-auto text-center my-4">
+      <%= will_paginate %>
+    </div>
+  </div>
+</div>
