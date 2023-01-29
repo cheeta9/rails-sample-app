@@ -19,6 +19,13 @@ RSpec.describe 'Users', type: :request do
         expect(response).to have_http_status(:success)
         expect(response.body).to include full_title('All users')
       end
+
+      it '有効化されていないユーザーは表示されないこと' do
+        not_activated_user = FactoryBot.create(:not_activated_user)
+        log_in(user)
+        get users_path
+        expect(response.body).not_to include not_activated_user.name
+      end
     end
   end
 
@@ -48,12 +55,20 @@ RSpec.describe 'Users', type: :request do
                   password_confirmation: 'password' } }
       end
 
+      before { ActionMailer::Base.deliveries.clear }
+
       it '登録できること' do
         expect { post users_path, params: user_params }.to change(User, :count).by 1
-        user = User.last
-        expect(response).to redirect_to user
-        expect(flash[:success]).not_to be_empty
-        expect(logged_in?).to be_truthy
+      end
+
+      it 'メールが1件存在すること' do
+        post users_path, params: user_params
+        expect(ActionMailer::Base.deliveries.size).to eq 1
+      end
+
+      it '登録時点では有効化されていないこと' do
+        post users_path, params: user_params
+        expect(User.last).not_to be be_activated
       end
     end
   end
@@ -81,22 +96,33 @@ RSpec.describe 'Users', type: :request do
       end
     end
 
-    context '別のユーザーの場合' do
-      let!(:other_user) do
-        FactoryBot.create(:other_user)
+    context 'ログインしている場合' do
+      context '別のユーザーの場合' do
+        let!(:other_user) do
+          FactoryBot.create(:other_user)
+        end
+
+        before do
+          log_in(user)
+          get edit_user_path(other_user)
+        end
+
+        it 'flashが空であること' do
+          expect(flash).to be_blank
+        end
+
+        it 'rootページにリダイレクトすること' do
+          expect(response).to redirect_to root_path
+        end
       end
 
-      before do
-        log_in(user)
-        get edit_user_path(other_user)
-      end
-
-      it 'flashが空であること' do
-        expect(flash).to be_blank
-      end
-
-      it 'rootページにリダイレクトすること' do
-        expect(response).to redirect_to root_path
+      context '有効化されていないユーザーの場合' do
+        it 'rootページにリダイレクトすること' do
+          not_activated_user = FactoryBot.create(:not_activated_user)
+          log_in(not_activated_user)
+          get user_path(not_activated_user)
+          expect(response).to redirect_to root_path
+        end
       end
     end
   end
