@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "AccountActivations", type: :request do
-  describe '/account_activations/{id}/edit' do
+  describe 'GET /account_activations/{id}/edit' do
     before do
       post users_path, params: { user: { name: 'Example User',
                                          email: 'user@example.com',
