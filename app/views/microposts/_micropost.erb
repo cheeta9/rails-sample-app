@@ -1,0 +1,16 @@
+<li class="flex pb-3" id="micropost-<%= micropost.id %>">
+  <%= link_to gravatar_for(micropost.user, size: 50), micropost.user %>
+  <div class="pl-3">
+    <%= link_to micropost.user.name, micropost.user, class: "underline decoration-sky-500" %>
+  </div>
+  <div class="pl-3">
+    <%= micropost.content %>
+    <%= image_tag(micropost.image, size: 500) if micropost.image.attached? %>
+  </div>
+  <div class="pl-3">
+    Posted <%= time_ago_in_words(micropost.created_at) %> ago.
+    <% if current_user?(micropost.user) %>
+      <%= link_to "delete", micropost, data: { turbo_method: :delete, confirm: "You sure?" }, class: "underline decoration-sky-500" %>
+    <% end %>
+  </div>
+</li>
