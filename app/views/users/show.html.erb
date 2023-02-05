@@ -1,5 +1,5 @@
 <%= provide(:title, @user.name) %>
-<div class="p-6 bg-gray-100 text-gray-700">
+<div class="p-6 bg-gray-100 text-gray-700 flex">
   <aside>
     <section>
       <h1 class="flex">
@@ -12,4 +12,11 @@
       </h1>
     </section>
   </aside>
+  <div class="pl-6">
+    <% if @user.microposts.any? %>
+      <h3>Microposts (<%= @user.microposts.count %>)</h3>
+      <ol><%= render @microposts %></ol>
+      <%= will_paginate @microposts %>
+    <% end %>
+  </div>
 </div>

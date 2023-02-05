@@ -1,0 +1,16 @@
+<%= form_with(model: @micropost, local: true) do |f| %>
+  <%= render 'shared/error_messages', model: @micropost %>
+
+  <div><%= f.text_area :content, placeholder: "Compose new micropost...", class: "pl-1 w-96" %></div>
+  <div class="py-2">
+    <%= f.submit "Post", class: "text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2" %>
+  </div>
+  <div class="py-2"><%= f.file_field :image, accept: "image/jpeg,image/gif,image/png" %></div>
+<% end %>
+
+<script type="text/javascript">
+  $('#micropost_image').bind('change', function() {
+    alert('Maximum file size is 5MB. Please choose a smaller file.');
+    $('#micropost_image').val('');
+  });
+</script>

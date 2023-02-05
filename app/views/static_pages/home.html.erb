@@ -1,13 +1,28 @@
-<div class="p-6 bg-gray-100 text-gray-700">
-  <h1 class="text-xl font-bold">Welcome to the Sample App</h1>
-  <h2>
-    This is the home page for the
-    <a href="https://railstutorial.jp/" class="underline decoration-sky-500">
-      <span class="text-sky-500">Ruby on Rails Tutorial</span>
-    </a>
-    sample application.
-  </h2>
+<% if logged_in? %>
+  <div class="p-6 bg-gray-100 text-gray-700 flex">
+    <aside>
+      <section><%= render 'shared/user_info' %></section>
+      <div class="py-6">
+        <section><%= render 'shared/micropost_form' %></section>
+      </div>
+    </aside>
+    <div class="py-6">
+      <h3>Micropost Feed</h3>
+      <%= render "shared/feed" %>
+    </div>
+  </div>
+<% else %>
+  <div class="p-6 bg-gray-100 text-gray-700">
+    <h1 class="text-xl font-bold">Welcome to the Sample App</h1>
+    <h2>
+      This is the home page for the
+      <a href="https://railstutorial.jp/" class="underline decoration-sky-500">
+        <span class="text-sky-500">Ruby on Rails Tutorial</span>
+      </a>
+      sample application.
+    </h2>
 
-  <br>
-  <%= link_to "Sign up now!", signup_path, class: "text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2" %>
-</div>
+    <br>
+    <%= link_to "Sign up now!", signup_path, class: "text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2" %>
+  </div>
+<% end %>
