@@ -77,4 +77,36 @@ RSpec.describe 'Users', type: :system do
       expect(page).to have_content 'The form contains 4 errors.'
     end
   end
+
+  describe '#following' do
+    let!(:user) { FactoryBot.create(:user) }
+    let!(:other_user) { FactoryBot.create(:other_user) }
+
+    before do
+      user.follow(other_user)
+      log_in user
+    end
+
+    it 'followingの数とフォローしているユーザーへのリンクが表示されること' do
+      visit following_user_path(user)
+      expect(page).to have_content '1 following'
+      expect(page).to have_link other_user.name, href: user_path(other_user)
+    end
+  end
+
+  describe '#followers' do
+    let!(:user) { FactoryBot.create(:user) }
+    let!(:other_user) { FactoryBot.create(:other_user) }
+
+    before do
+      user.follow(other_user)
+      log_in other_user
+    end
+
+    it 'followersの数とフォローしているユーザーへのリンクが表示されること' do
+      visit followers_user_path(other_user)
+      expect(page).to have_content '1 followers'
+      expect(page).to have_link user.name, href: user_path(user)
+    end
+  end
 end

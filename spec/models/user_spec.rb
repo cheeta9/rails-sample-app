@@ -2,6 +2,8 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   let!(:user) { FactoryBot.build(:user) }
+  let!(:other_user) { FactoryBot.create(:other_user) }
+  let!(:admin_user) { FactoryBot.create(:admin_user) }
 
   it 'userが有効であること' do
     expect(user).to be_valid
@@ -73,6 +75,52 @@ RSpec.describe User, type: :model do
   describe '#authenticated?' do
     it 'digestがnilならfalseを返すこと' do
       expect(user.authenticated?(:remember, '')).to be_falsey
+    end
+  end
+
+  describe '#follow and #unfollow' do
+    before { user.save! }
+
+    it 'followするとfollowing?がtrueになること' do
+      expect(user.following?(other_user)).to be_falsy
+      user.follow(other_user)
+      expect(other_user.followers.include?(user)).to be_truthy
+      expect(user.following?(other_user)).to be_truthy
+    end
+
+    it 'unfollowするとfollowing?がfalseになること' do
+      user.follow(other_user)
+      expect(other_user.followers.include?(user)).to be_truthy
+      expect(user.following?(other_user)).to be_truthy
+      user.unfollow(other_user)
+      expect(user.following?(other_user)).to be_falsy
+    end
+  end
+
+  describe '#feed' do
+    before do
+      10.times { FactoryBot.create(:micropost, user: user) }
+      10.times { FactoryBot.create(:micropost, user: other_user) }
+      10.times { FactoryBot.create(:micropost, user: admin_user) }
+      user.follow(other_user)
+    end
+
+    it ' フォローしているユーザーの投稿が表示されること' do
+      other_user.microposts.each do |micropost|
+        expect(user.feed.include?(micropost)).to be_truthy
+      end
+    end
+
+    it ' 自分の投稿が表示されること' do
+      user.microposts.each do |micropost|
+        expect(user.feed.include?(micropost)).to be_truthy
+      end
+    end
+
+    it ' フォローしていないユーザーの投稿が表示されないこと' do
+      admin_user.microposts.each do |micropost|
+        expect(user.feed.include?(micropost)).to be_falsy
+      end
     end
   end
 end

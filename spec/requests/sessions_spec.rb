@@ -39,7 +39,7 @@ RSpec.describe 'Sessions', type: :request do
       expect(logged_in?).to be_truthy
 
       delete logout_path
-      expect(logged_in?).to be_falsey
+      expect(logged_in?).to be_falsy
     end
 
     it '2回連続でログアウトしてもエラーにならないこと' do

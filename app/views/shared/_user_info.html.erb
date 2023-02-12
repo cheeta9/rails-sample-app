@@ -1,0 +1,16 @@
+<div class="flex">
+  <div>
+    <%= link_to gravatar_for(current_user, size: 50), current_user %>
+  </div>
+  <div class="pl-3">
+    <h1><strong><%= current_user.name %></strong></h1>
+    <div>
+      <a href="<%= user_path(current_user) %>" class="underline decoration-sky-500">
+        <strong class="text-sky-500">view my profile</strong>
+      </a>
+    </div>
+    <div>
+      <%= pluralize(current_user.microposts.count, "micropost") %>
+    </div>
+  </div>
+</div>

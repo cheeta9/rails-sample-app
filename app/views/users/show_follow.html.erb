@@ -1,0 +1,40 @@
+<%= provide(:title, @title) %>
+<div class="p-6 bg-gray-100 text-gray-700 flex">
+  <aside>
+    <section>
+      <div class="flex">
+        <div>
+          <%= gravatar_for @user %>
+        </div>
+        <div class="pl-3">
+          <div class="text-xl font-bold">
+            <%= @user.name %>
+          </div>
+          <div>
+            <a href="<%= user_path(@user) %>" class="underline decoration-sky-500">
+              <strong class="text-sky-500">view my profile</strong>
+            </a>
+          </div>
+          <span><strong>Microposts:</strong> <%= @user.microposts.count %></span>
+        </div>
+      </div>
+    </section>
+    <section>
+      <%= render "shared/stats" %>
+      <% if @users.any? %>
+        <div class="mt-5 grid grid-cols-5">
+          <% @users.each do |user| %>
+            <div class="mb-1"><%= link_to gravatar_for(user, size: 30), user %></div>
+          <% end %>
+        </div>
+      <% end %>
+    </section>
+  </aside>
+  <div class="pl-6">
+    <h3><%= @title %></h3>
+    <% if @users.any? %>
+      <ul><%= render @users %></ul>
+      <%= will_paginate %>
+    <% end %>
+  </div>
+</div>

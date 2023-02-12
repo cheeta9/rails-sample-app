@@ -1,0 +1,13 @@
+<% @user ||= current_user %>
+<div class="flex">
+  <div>
+    <a href="<%= following_user_path(@user) %>" class="underline decoration-sky-500">
+      <strong class="text-sky-500"><%= @user.following.count %> following</strong>
+    </a>
+  </div>
+  <div class="pl-3">
+    <a href="<%= followers_user_path(@user) %>" class="underline decoration-sky-500">
+      <strong class="text-sky-500"><%= @user.followers.count %> followers</strong>
+    </a>
+  </div>
+</div>
