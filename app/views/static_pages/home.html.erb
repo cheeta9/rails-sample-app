@@ -2,12 +2,13 @@
   <div class="p-6 bg-gray-100 text-gray-700 flex">
     <aside>
       <section><%= render 'shared/user_info' %></section>
+      <section><%= render 'shared/stats' %></section>
       <div class="py-6">
         <section><%= render 'shared/micropost_form' %></section>
       </div>
     </aside>
     <div class="py-6">
-      <h3>Micropost Feed</h3>
+      <h3><strong>Micropost Feed</strong></h3>
       <%= render "shared/feed" %>
     </div>
   </div>
